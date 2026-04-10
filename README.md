@@ -2,6 +2,9 @@
 
 A zero-dependency relative time formatter built on native `Intl.PluralRules` — designed for UI systems that treat time perception as a first-class concern.
 
+[**✨ Try the Interactive Live Demo**](http://appents.com/tech/human-time)
+
+
 ```
 3m ago · In 2h · Just now · Mar 15
 ```
