@@ -1,5 +1,5 @@
 {
-  "name": "@taman-islam/human-time",
+  "name": "@appents/human-time",
   "version": "0.1.0",
   "type": "module",
   "description": "Zero-dependency relative time formatter for UI systems. Built on native Intl.PluralRules.",
@@ -28,11 +28,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jhotika/human-time.git"
+    "url": "https://github.com/taman-islam/human-time.git"
   },
-  "homepage": "https://github.com/jhotika/human-time#readme",
+  "homepage": "https://github.com/taman-islam/human-time#readme",
   "bugs": {
-    "url": "https://github.com/jhotika/human-time/issues"
+    "url": "https://github.com/taman-islam/human-time/issues"
   },
   "keywords": [
     "time",
