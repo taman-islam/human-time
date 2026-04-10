@@ -31,7 +31,7 @@ npm install @appents/human-time
 ### Compact format (feeds, notifications)
 
 ```typescript
-import { formatRelative } from "@appents/human-time";
+import { formatRelative } from '@appents/human-time';
 
 const past = new Date(Date.now() - 5 * 60_000);
 formatRelative(past); // "5m ago"
@@ -43,7 +43,7 @@ formatRelative(future); // "In 3h"
 ### Long format (tables, dashboards, timelines)
 
 ```typescript
-import { formatRelativeLong } from "@appents/human-time";
+import { formatRelativeLong } from '@appents/human-time';
 
 const past = new Date(Date.now() - 5 * 60_000);
 formatRelativeLong(past); // "5 minutes ago"
@@ -76,12 +76,12 @@ Beyond 12 months, output falls back to a localized absolute date (`Mar 15` or `M
 Supply a full dictionary to override every string:
 
 ```typescript
-import { formatRelative, LocaleDictionary } from "@appents/human-time";
+import { formatRelative, LocaleDictionary } from '@appents/human-time';
 
 const esDictionary: LocaleDictionary = {
   smoothed: {
-    past: "Hace un momento",
-    future: "En un momento",
+    past: 'Hace un momento',
+    future: 'En un momento',
   },
   relative: {
     past: (val) => `Hace ${val}`,
@@ -89,23 +89,23 @@ const esDictionary: LocaleDictionary = {
   },
   units: {
     short: {
-      minute: "m",
-      hour: "h",
-      day: "d",
-      week: "w",
-      month: "mo",
+      minute: 'm',
+      hour: 'h',
+      day: 'd',
+      week: 'w',
+      month: 'mo',
     },
     long: {
-      minute: { one: "minuto", other: "minutos" },
-      hour: { one: "hora", other: "horas" },
-      day: { one: "día", other: "días" },
-      week: { one: "semana", other: "semanas" },
-      month: { one: "mes", other: "meses" },
+      minute: { one: 'minuto', other: 'minutos' },
+      hour: { one: 'hora', other: 'horas' },
+      day: { one: 'día', other: 'días' },
+      week: { one: 'semana', other: 'semanas' },
+      month: { one: 'mes', other: 'meses' },
     },
   },
 };
 
-formatRelative(date, { locale: "es", dictionary: esDictionary });
+formatRelative(date, { locale: 'es', dictionary: esDictionary });
 ```
 
 Plural forms are resolved via `Intl.PluralRules` — no hardcoded rules, no locale bundles.

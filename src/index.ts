@@ -85,7 +85,7 @@ function assertValidConfig(config: TimeConfig): void {
     !Number.isFinite(config.monthCutoff) ||
     config.monthCutoff <= 0
   ) {
-    throw new Error("Invalid TimeConfig");
+    throw new Error('Invalid TimeConfig');
   }
 }
 
@@ -94,15 +94,15 @@ function assertValidConfig(config: TimeConfig): void {
 // ---------------------------------------------------------------------------
 
 export type Unit =
-  | "smoothed"
-  | "minute"
-  | "hour"
-  | "day"
-  | "week"
-  | "month"
-  | "date";
+  | 'smoothed'
+  | 'minute'
+  | 'hour'
+  | 'day'
+  | 'week'
+  | 'month'
+  | 'date';
 
-export type TieredUnit = Exclude<Unit, "smoothed" | "date">;
+export type TieredUnit = Exclude<Unit, 'smoothed' | 'date'>;
 
 export type PluralRule = Intl.LDMLPluralRule;
 
@@ -134,8 +134,8 @@ export interface LocaleDictionary {
 
 export const enUSDictionary: LocaleDictionary = {
   smoothed: {
-    past: "Just now",
-    future: "In a moment",
+    past: 'Just now',
+    future: 'In a moment',
   },
   relative: {
     past: (val) => `${val} ago`,
@@ -143,18 +143,18 @@ export const enUSDictionary: LocaleDictionary = {
   },
   units: {
     short: {
-      minute: "m",
-      hour: "h",
-      day: "d",
-      week: "w",
-      month: "mo",
+      minute: 'm',
+      hour: 'h',
+      day: 'd',
+      week: 'w',
+      month: 'mo',
     },
     long: {
-      minute: { one: "minute", other: "minutes" },
-      hour: { one: "hour", other: "hours" },
-      day: { one: "day", other: "days" },
-      week: { one: "week", other: "weeks" },
-      month: { one: "month", other: "months" },
+      minute: { one: 'minute', other: 'minutes' },
+      hour: { one: 'hour', other: 'hours' },
+      day: { one: 'day', other: 'days' },
+      week: { one: 'week', other: 'weeks' },
+      month: { one: 'month', other: 'months' },
     },
   },
 };
@@ -164,33 +164,33 @@ export const enUSDictionary: LocaleDictionary = {
 // ---------------------------------------------------------------------------
 
 type ResolvedUnit =
-  | { unit: "smoothed" }
-  | { unit: "date" }
+  | { unit: 'smoothed' }
+  | { unit: 'date' }
   | { unit: TieredUnit; value: number };
 
 function resolveUnit(diff: TimeDiff, config: TimeConfig): ResolvedUnit {
   if (diff.getAbsMs() < config.smoothMs) {
-    return { unit: "smoothed" };
+    return { unit: 'smoothed' };
   }
 
   const totalSeconds = diff.getSeconds();
   if (totalSeconds < 60) {
-    return { unit: "smoothed" }; // hard floor — minutes are never 0
+    return { unit: 'smoothed' }; // hard floor — minutes are never 0
   }
 
   const m = diff.getMinutes();
   if (m < 60) {
-    return { value: m, unit: "minute" };
+    return { value: m, unit: 'minute' };
   }
 
   const h = diff.getHours();
   if (h < 24) {
-    return { value: h, unit: "hour" };
+    return { value: h, unit: 'hour' };
   }
 
   const d = diff.getDays();
   if (d < config.weekCutoff) {
-    return { value: d, unit: "day" };
+    return { value: d, unit: 'day' };
   }
 
   const w = diff.getWeeks();
@@ -199,14 +199,14 @@ function resolveUnit(diff: TimeDiff, config: TimeConfig): ResolvedUnit {
   // If we've hit the month cutoff but mathematically haven't accrued a full month yet
   // (e.g. 28-29 days), continue to show weeks to avoid dropping out to absolute date prematurely.
   if (w < config.monthCutoff || mo < 1) {
-    return { value: w, unit: "week" };
+    return { value: w, unit: 'week' };
   }
 
   if (mo < 12) {
-    return { value: mo, unit: "month" };
+    return { value: mo, unit: 'month' };
   }
 
-  return { unit: "date" };
+  return { unit: 'date' };
 }
 
 // ---------------------------------------------------------------------------
@@ -241,10 +241,10 @@ function _formatCore(
     locale: string,
   ) => string,
 ): string {
-  if (isNaN(date.getTime())) throw new Error("human-time: invalid Date");
+  if (isNaN(date.getTime())) throw new Error('human-time: invalid Date');
 
   const compareDate = options?.compareDate ?? new Date();
-  const locale = options?.locale ?? "en-US";
+  const locale = options?.locale ?? 'en-US';
   const config = options?.config ?? DEFAULT_CONFIG;
   const dict = options?.dictionary ?? enUSDictionary;
 
@@ -254,16 +254,16 @@ function _formatCore(
   const resolved = resolveUnit(diff, config);
   const isFuture = diff.isFuture();
 
-  if (resolved.unit === "smoothed")
+  if (resolved.unit === 'smoothed')
     return isFuture ? dict.smoothed.future : dict.smoothed.past;
 
-  if (resolved.unit === "date") {
+  if (resolved.unit === 'date') {
     return date.toLocaleDateString(locale, {
-      month: "short",
-      day: "numeric",
+      month: 'short',
+      day: 'numeric',
       year:
         date.getFullYear() !== compareDate.getFullYear()
-          ? "numeric"
+          ? 'numeric'
           : undefined,
     });
   }
